@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import Data from './data';
+import {Link,Route,Switch} from 'react-router-dom';
+import Detail from './Detail';
 
 function App() {
 
@@ -17,8 +19,8 @@ function App() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link ><Link to="/">Home</Link></Nav.Link>
+                <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -31,33 +33,42 @@ function App() {
           </Container>
         </Navbar>
 
-        <div className='jumbotron'>
-            <h1>20% Season Off</h1>
-            <p>
-            Lorem ipsum is placeholder text commonly used in the graphic, 
-            print, and publishing industries for previewing layouts and visual mockups.
-            </p>
-            <p>
-              <button type='button' className='btnPrimary'>Learn more</button>
-            </p>
-        </div>
         
-        <div className='container'>
-          <div className='row'>
-            {/* i : shoes 안에있던 하나하나의 데이터 
-                k : 반복문을 돌면서 0,1,2씩 증가되는 변수
-            */}
-            {
-              shoes.map((i,k) => {
-                return (
-                  <>
-                  <ShoesComponent shoesData={shoes[k]} k={k} key={k}/>
-                  </>
-                )
-              })
-            }
+        <Switch>
+        <Route exact path="/">
+          <div className='jumbotron'>
+              <h1>20% Season Off</h1>
+              <p>
+              Lorem ipsum is placeholder text commonly used in the graphic, 
+              print, and publishing industries for previewing layouts and visual mockups.
+              </p>
+              <p>
+                <button type='button' className='btnPrimary'>Learn more</button>
+              </p>
           </div>
-        </div>
+          <div className='container'>
+            <div className='row'>
+              {/* i : shoes 안에있던 하나하나의 데이터 
+                  k : 반복문을 돌면서 0,1,2씩 증가되는 변수
+              */}
+              {
+                shoes.map((i,k) => {
+                  return (
+                    <>
+                    <ShoesComponent shoesData={shoes[k]} k={k} key={k}/>
+                    </>
+                  )
+                })
+              }
+            </div>
+          </div>
+        </Route>
+
+        <Route path="/detail/:id">
+            <Detail shoes={shoes}></Detail>
+        </Route>
+        </Switch>
+        
     </div>
   );
 }
